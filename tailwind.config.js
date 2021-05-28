@@ -13,7 +13,8 @@ module.exports = {
         paddingItem: '1rem 2rem 4rem'
       },
       gridTemplateColumns: {
-        '4': 'repeat(4, minmax(5rem, 1fr))'
+        'auto-fit': 'repeat(4, minmax(8rem, 20rem))',
+        'auto-fit-medium': 'repeat(2, minmax(10rem, 15rem))'
       }
     }
   },

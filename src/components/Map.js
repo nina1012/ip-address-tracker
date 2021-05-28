@@ -13,19 +13,19 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = ({ coordinates }) => {
-  const position = [51.505, -0.09];
+  // const position = [51.505, -0.09];
 
   return (
     <div
       className="leaflet-container absolute  top-0 -z-1"
       // style={{ zIndex: '-1' }}
     >
-      <MapContainer center={position} zoom={13} scrollWheelZoom={true}>
+      <MapContainer center={coordinates} zoom={13} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={position}>
+        <Marker position={coordinates}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
