@@ -13,8 +13,6 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = ({ coordinates }) => {
-  // const position = [51.505, -0.09];
-
   return (
     <div
       className="leaflet-container absolute  top-0 -z-1"
