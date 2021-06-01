@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import Header from './components/Header';
 import InfoList from './components/InfoList';
@@ -7,51 +7,45 @@ import LoadingIcon from './components/LoadingIcon';
 import useFetch from './useFetch';
 
 import Map from './components/Map';
+import { validateInput } from './validateInput';
 
 function App() {
-  const [address, setAddress] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [url, setUrl] = useState(
+    `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IPIFY_KEY}`
+  );
 
-  // const { data: info, isLoading, error, coordinates } = useFetch(
-  //   `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IPIFY_KEY}`
-  // );
+  const { data: info, isLoading, error, coordinates } = useFetch(url);
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setAddress(inputValue);
-  //   const ipRegex = new RegExp(
-  //     /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-  //   );
+  function handleSubmit(e) {
+    e.preventDefault();
+    // check if input value is valid ip address or domain name
+    setUrl(validateInput(inputValue));
+  }
 
-  //   const domainNameRegex = new RegExp(
-  //     /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/
-  //   );
+  function handleChange(e) {
+    setInputValue(e.target.value);
+  }
 
-  //   console.log(address);
+  console.log({ info, error });
 
-  //   // check if input value is valid ip address or domain name
-  // }
+  if (error) {
+    return <h1>{JSON.stringify(error, null, 2)}</h1>;
+  }
 
-  // function handleChange(e) {
-  //   setAddress(e.target.value);
-  // }
+  if (isLoading) {
+    return <LoadingIcon />;
+  }
 
   return (
     <>
-      {isLoading ? (
-        <LoadingIcon />
-      ) : (
+      {info ? (
         <div className="App font-Rubik relative">
-          <Header
-            info={info}
-            // handleSubmit={handleSubmit}
-            // handleChange={handleChange}
-            address={address}
-          />
+          <Header handleSubmit={handleSubmit} handleChange={handleChange} />
           <InfoList info={info} />
           <Map coordinates={coordinates} />
         </div>
-      )}
+      ) : null}
     </>
   );
 }

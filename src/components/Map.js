@@ -14,10 +14,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 const Map = ({ coordinates }) => {
   return (
-    <div
-      className="leaflet-container absolute  top-0 -z-1"
-      // style={{ zIndex: '-1' }}
-    >
+    <div className="leaflet-container absolute  top-0 -z-1">
       <MapContainer center={coordinates} zoom={13} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
