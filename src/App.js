@@ -10,12 +10,11 @@ import Map from './components/Map';
 import { validateInput } from './validateInput';
 
 function App() {
+  const userLocationInfo = `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IPIFY_KEY}`;
   const [inputValue, setInputValue] = useState('');
-  const [url, setUrl] = useState(
-    `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IPIFY_KEY}`
-  );
+  const [url, setUrl] = useState(userLocationInfo);
 
-  const { data: info, isLoading, error, coordinates } = useFetch(url);
+  // const { data: info, isLoading, error, coordinates, reset } = useFetch(url);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,10 +26,27 @@ function App() {
     setInputValue(e.target.value);
   }
 
-  console.log({ info, error });
-
   if (error) {
-    return <h1>{JSON.stringify(error, null, 2)}</h1>;
+    const resetToUserLocationInfo = () => {
+      reset();
+      setUrl(userLocationInfo);
+    };
+    return (
+      <div className="text-center flex flex-col h-screen items-center justify-center">
+        <pre className="text-red-500 text-2xl mb-6">
+          {// JSON.stringify(error)
+          JSON.stringify(error.message, null, 2)}
+          <br />
+        </pre>
+        <button
+          onClick={resetToUserLocationInfo}
+          style={{ backgroundColor: '#505ec1' }}
+          className="text-medium text-white py-2 px-7 text-3xl"
+        >
+          Retry
+        </button>
+      </div>
+    );
   }
 
   if (isLoading) {

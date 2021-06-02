@@ -4,23 +4,26 @@ const useFetch = url => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [coordinates, setCoordinates] = useState();
+  const [coordinates, setCoordinates] = useState(null);
 
   useEffect(() => {
     async function fetching() {
       try {
-        setIsLoading(true);
-        const response = await fetch(url);
-        const data = await response.json();
-        setData(data);
-        console.log('from usefetch');
-
-        const {
-          location: { lat, lng }
-        } = data;
-        setCoordinates([lat, lng]);
-        console.log(coordinates);
-        setIsLoading(false);
+        // if url is undefined, reset all the data and url to userLocationInfo and throw an error
+        if (url) {
+          setIsLoading(true);
+          const response = await fetch(url);
+          const data = await response.json();
+          setData(data);
+          const {
+            location: { lat, lng }
+          } = data;
+          setCoordinates([lat, lng]);
+          setIsLoading(false);
+        } else {
+          reset();
+          throw new TypeError('Invalid input value');
+        }
       } catch (error) {
         setError(error);
       }
@@ -28,7 +31,14 @@ const useFetch = url => {
     fetching();
   }, [url]);
 
-  return { data, isLoading, error, coordinates };
+  function reset() {
+    setData(null);
+    setError(null);
+    setIsLoading(false);
+    setCoordinates();
+  }
+
+  return { data, isLoading, error, coordinates, reset };
 };
 
 export default useFetch;
