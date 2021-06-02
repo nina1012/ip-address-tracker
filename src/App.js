@@ -10,7 +10,7 @@ import Map from './components/Map';
 import { validateInput } from './validateInput';
 
 function App() {
-  const userLocationInfo = `https://geo.ipify.org/api/v1?apiKey=${process.env.REACT_APP_IPIFY_KEY}`;
+  const userLocationInfo = `https://geo.ipify.org/api/v1?apiKey=at_zQCSwsHaeQdiaMetJ5Lr7wcNRRaaY`;
   const [inputValue, setInputValue] = useState('');
   const [url, setUrl] = useState(userLocationInfo);
 
