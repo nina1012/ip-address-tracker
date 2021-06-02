@@ -14,7 +14,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [url, setUrl] = useState(userLocationInfo);
 
-  // const { data: info, isLoading, error, coordinates, reset } = useFetch(url);
+  const { data: info, isLoading, error, coordinates, reset } = useFetch(url);
 
   function handleSubmit(e) {
     e.preventDefault();
